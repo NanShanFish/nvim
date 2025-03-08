@@ -1,0 +1,9 @@
+{
+	"ZeroTable": {
+		"prefix": "zt",
+		"body": [
+			"[ [0]*(${1:col}) for _ in range(${2:row}) ]"
+		],
+		"description": "Create a zero table"
+	}
+}
