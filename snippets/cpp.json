@@ -1,0 +1,43 @@
+{
+	"OI Body": {
+		"prefix": "oi",
+		"body": [
+			"// #pragma GCC optimize(2)",
+			"#include <bits/stdc++.h>",
+			"using namespace std;",
+			"#define endl '\\n'",
+			"#define i4 int",
+			"#define u4 unsigned int",
+			"#define u8 unsigned long long",
+			"#define i8 long long",
+			"#define Debug(x) cout << #x << ':' << x << endl",
+			"",
+			"void solve()",
+			"{",
+			"	${1:Code}",
+			"}",
+			"",
+			"signed main()",
+			"{",
+			"	ios::sync_with_stdio(false);",
+			"	cin.tie(0);",
+			"",
+			"",
+			"#ifdef DG",
+			"	clock_t start, finish;",
+			"	start = clock();",
+			"#endif // DG",
+			"",
+			"	solve();",
+			"",
+			"#ifdef DG",
+			"	finish = clock();",
+			"	cout <<endl<<\"the time cost is:\" << double(finish - start) / CLOCKS_PER_SEC<<endl;",
+			"#endif // DG",
+			"",
+			"	return 0;",
+			"}"
+		],
+		"description": "C++ Template with main function and solve function"
+	}
+}
