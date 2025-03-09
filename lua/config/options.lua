@@ -43,14 +43,14 @@ opt.hidden = true            -- Enable background buffers
 opt.history = 100            -- Remember N lines in history
 opt.lazyredraw = true        -- Faster scrolling
 opt.synmaxcol = 240          -- Max column for syntax highlight
-opt.updatetime = 250         -- ms to wait for trigger an event
+-- opt.updatetime = 250          -- ms to wait for trigger an event
 
 -----------------------------------------------------------
 -- Netrwy, CPU
 -----------------------------------------------------------
-vim.g.netrw_banner = 0
-vim.g.netrw_liststyle = 3
-vim.g.netrw_winsize = 25
+-- vim.g.netrw_banner = 0
+-- vim.g.netrw_liststyle = 3
+-- vim.g.netrw_winsize = 25
 
 -----------------------------------------------------------
 -- Startup
@@ -64,10 +64,6 @@ local disabled_built_ins = {
 	"getscriptPlugin",
 	"gzip",
 	"logipat",
-	-- "netrw",
-	-- "netrwPlugin",
-	-- "netrwSettings",
-	-- "netrwFileHandlers",
 	"matchit",
 	"tar",
 	"tarPlugin",
@@ -97,8 +93,6 @@ end
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "python" },
 	callback = function()
-		vim.bo.tabstop = 4
-		vim.bo.shiftwidth = 4
 		vim.bo.expandtab = true
 	end,
 })
@@ -109,7 +103,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.bo.tabstop = 4
 		vim.bo.shiftwidth = 4
-		vim.bo.expandtab = false
 	end,
 })
 
@@ -118,6 +111,8 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "markdown" },
 	callback = function()
 		vim.wo.wrap = true
+		vim.tabstop = 2
+		vim.bo.shiftwidth = 2
 		vim.api.nvim_buf_set_keymap(0, "n", "j", "gj", { noremap = true, silent = true })
 		vim.api.nvim_buf_set_keymap(0, "n", "k", "gk", { noremap = true, silent = true })
 	end,

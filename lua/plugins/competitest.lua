@@ -1,7 +1,6 @@
 return {
 	'xeluxee/competitest.nvim',
 	dependencies = 'MunifTanjim/nui.nvim',
-	event = "VeryLazy",
 	keys = {
 		{ "\\r", "<cmd>CompetiTest run<cr>", desc = "Run testcase" },
 		{ "\\a", "<cmd>CompetiTest add_testcase<cr>", desc = "Add testcase" },

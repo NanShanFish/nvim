@@ -1,8 +1,7 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		Event = { "VeryLazy", "LazyFile" },
-		dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
+		event = { "InsertEnter", "VeryLazy" },
 		opts = {
 			highlight = { enable = true },
 			indent = { enable = true },
@@ -46,4 +45,9 @@ return {
 			require'nvim-treesitter.configs'.setup(opts)
 		end
 	},
+	{
+		'nvim-treesitter/nvim-treesitter-textobjects',
+		event = "VeryLazy",
+		dependencies = "nvim-treesitter/nvim-treesitter",
+	}
 }
