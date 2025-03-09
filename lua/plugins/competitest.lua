@@ -2,6 +2,14 @@ return {
 	'xeluxee/competitest.nvim',
 	dependencies = 'MunifTanjim/nui.nvim',
 	event = "VeryLazy",
+	keys = {
+		{ "\\r", "<cmd>CompetiTest run<cr>", desc = "Run testcase" },
+		{ "\\a", "<cmd>CompetiTest add_testcase<cr>", desc = "Add testcase" },
+		{ "\\c", "<cmd>CompetiTest run_no_compile<cr>", desc = "Run without compile" },
+		{ "\\e", "<cmd>CompetiTest edit_testcase<cr>", desc = "Edit testcase" },
+		{ "\\d", "<cmd>CompetiTest delete_testcase<cr>", desc = "Delete testcase" },
+		{ "\\<space>", "<cmd>CompetiTest show_ui<cr>", desc = "Show last ui" },
+	},
 	config = function() require('competitest').setup {
 		floating_border = 'single',
 		compile_directory = "./output/",

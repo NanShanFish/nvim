@@ -15,6 +15,7 @@ return {
 		local lualine_require = require("lualine_require")
 		lualine_require.require = require
 
+		LazyVim = require("lazy-nvim")
 		local icons = LazyVim.config.icons
 
 		vim.o.laststatus = vim.g.lualine_laststatus

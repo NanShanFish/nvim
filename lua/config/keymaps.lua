@@ -32,27 +32,3 @@ map("t", "<Esc>", "<C-\\><C-n>", opt)
 -- Ctrl + Backspace
 map("i","<C-BS>","<C-w>",opt)
 map("i","<C-;>","<C-o>:",opt)
-
-vim.keymap.set("n", "K", vim.lsp.buf.hover, opt)
--- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opt)
--- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opt)
-vim.keymap.set("n", "grn", vim.lsp.buf.rename, opt)
-vim.keymap.set("n", "gri", vim.lsp.buf.implementation, opt)
-vim.keymap.set("n", "gra", vim.lsp.buf.code_action, opt)
-vim.keymap.set("n", "<M-\\>", vim.diagnostic.open_float, opt)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opt)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opt)
------------------------------------------------------------
--- Neovim shortcuts
------------------------------------------------------------
--- Yazi
--- map("n","<space>e","<cmd>Yazi<cr>",opt)
--- map("n","<space>E","<cmd>Yazi cwd<cr>",opt)
-
--- Competitest
--- map("n", "\\r", "<cmd>CompetiTest run<cr>", opt)
--- map("n", "\\a", "<cmd>CompetiTest add_testcase<cr>", opt)
--- map("n", "\\c", "<cmd>CompetiTest run_no_compile<cr>", opt)
--- map("n", "\\e", "<cmd>CompetiTest edit_testcase<cr>", opt)
--- map("n", "\\d", "<cmd>CompetiTest delete_testcase<cr>", opt)
--- map("n", "\\<space>", "<cmd>CompetiTest show_ui<cr>", opt)

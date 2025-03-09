@@ -48,9 +48,9 @@ opt.updatetime = 250         -- ms to wait for trigger an event
 -----------------------------------------------------------
 -- Netrwy, CPU
 -----------------------------------------------------------
--- vim.g.netrw_banner = 0
--- vim.g.netrw_liststyle = 3
--- vim.g.netrw_winsize = 25
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
+vim.g.netrw_winsize = 25
 
 -----------------------------------------------------------
 -- Startup
@@ -64,10 +64,10 @@ local disabled_built_ins = {
 	"getscriptPlugin",
 	"gzip",
 	"logipat",
-	"netrw",
-	"netrwPlugin",
-	"netrwSettings",
-	"netrwFileHandlers",
+	-- "netrw",
+	-- "netrwPlugin",
+	-- "netrwSettings",
+	-- "netrwFileHandlers",
 	"matchit",
 	"tar",
 	"tarPlugin",
