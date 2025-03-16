@@ -22,7 +22,8 @@ M = {
 	-- LSP Configuration
 	-- https://github.com/neovim/nvim-lspconfig
 	"neovim/nvim-lspconfig",
-	event = "VeryLazy",
+    -- event = "LazyFile",
+    lazy = false,
 	dependencies = {
 		-- LSP Management
 		-- https://github.com/williamboman/mason.nvim
@@ -46,7 +47,6 @@ M = {
 		-- schemas
 		-- { "b0o/schemastore.nvim" },
 	},
-	lazy = false,
 	config = function()
 		require("mason").setup()
 		require("mason-lspconfig").setup({

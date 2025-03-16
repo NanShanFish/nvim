@@ -32,3 +32,18 @@ map("t", "<Esc>", "<C-\\><C-n>", opt)
 -- Ctrl + Backspace
 map("i","<C-BS>","<C-w>",opt)
 map("i","<C-;>","<C-o>:",opt)
+
+-- Visual Mode
+map("v", "K", "k", opt)
+
+local function find_placeholder(direction)
+    if direction == 'w' then
+        vim.fn.search("<++>", 'w')
+        vim.api.nvim_feedkeys("lva<", "n", false)
+    else
+        vim.fn.search("<++>", 'b')
+        vim.api.nvim_feedkeys("lva<", "n", false)
+    end
+end
+vim.keymap.set({"n","v"}, "<C-n>", function() find_placeholder("w") end, opt)
+vim.keymap.set({"n","v"}, "<C-p>", function() find_placeholder("b") end, opt)

@@ -21,15 +21,4 @@ return {
 		event = "InsertEnter",
 		opts = {},
 	},
-	-- {
-	-- 	'echasnovski/mini.indentscope',
-	-- 	version = false,
-	-- 	event = "VeryLazy",
-	-- 	opts = {
-	-- 		animation = function(s, n)
-	-- 			return 50
-	-- 		end,
-	-- 		symbol = '|',
-	-- 	}
-	-- },
 }

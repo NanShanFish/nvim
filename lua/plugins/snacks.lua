@@ -1,7 +1,6 @@
 return {
 	"folke/snacks.nvim",
 	lazy = false,
-	-- event = "VeryLazy",
 	opts = {
 		bigfile = { enabled = true },
 		explorer = { replace_netrw = true, },
@@ -30,10 +29,10 @@ return {
 		},
 		words = { enabled = true },
 		quickfile = { enabled = true },
+		indent = { enabled = true },
+		lazygit = { enabled = true },
 
 		input = { enabled = false },
-		indent = { enabled = false },
-		lazygit = { enabled = false },
 		notifier = { enabled = false },
 		scroll = { enabled = false },
 		statuscolumn = { enabled = false },
