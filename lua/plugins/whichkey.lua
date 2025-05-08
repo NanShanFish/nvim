@@ -54,8 +54,6 @@ return {
 			{ "grn", vim.lsp.buf.rename, desc = "Rename" },
 			{ "gri", vim.lsp.buf.implementation, desc = "Implementation" },
 			{ "gra", vim.lsp.buf.code_action, desc = "Code action" },
-			{ "[d", vim.diagnostic.goto_prev, desc = "Prev Diagnostic" },
-			{ "]d", vim.diagnostic.goto_next, desc = "Next Diagnostic" },
 		})
 	end
 }

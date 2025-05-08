@@ -26,6 +26,7 @@ opt.wrap = false
 opt.list = true
 opt.listchars = "tab:| ,trail:·"
 opt.relativenumber = true
+vim.o.cmdheight = 0
 
 -----------------------------------------------------------
 -- Tabs, indent
@@ -111,8 +112,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.wo.wrap = true
         vim.tabstop = 2
         vim.bo.shiftwidth = 2
-        vim.api.nvim_buf_set_keymap(0, "n", "j", "gj", { noremap = true, silent = true })
-        vim.api.nvim_buf_set_keymap(0, "n", "k", "gk", { noremap = true, silent = true })
+        vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true, buffer=0})
+        vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true, buffer=0})
     end,
 })
 
