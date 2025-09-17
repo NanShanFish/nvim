@@ -1,44 +1,73 @@
 return {
-	"folke/snacks.nvim",
-	lazy = false,
-	opts = {
-		bigfile = { enabled = true },
-		explorer = { replace_netrw = true, },
-		scope = {
-			treesitter = {
-				enabled = true,
-				injections = true, -- include language injections when detecting scope (useful for languages like `vue`)
-				blocks = {
-					enabled = true, -- enable to use the following blocks
-					"function_declaration",
-					"function_definition",
-					"method_declaration",
-					"method_definition",
-					"class_declaration",
-					"class_definition",
-					"do_statement",
-					"while_statement",
-					"if_statement",
-					"for_statement",
-				},
-				-- these treesitter fields will be considered as blocks
-				field_blocks = {
-					"local_declaration",
-				},
-			},
-		},
-		words = { enabled = true },
-		quickfile = { enabled = true },
-		indent = { enabled = true },
-		lazygit = { enabled = true },
+    "folke/snacks.nvim",
+    lazy = false,
+    opts = {
+        bigfile = { enabled = true },
+        explorer = { replace_netrw = true, },
+        scope = {
+            treesitter = {
+                enabled = true,
+                injections = true, -- include language injections when detecting scope (useful for languages like `vue`)
+                blocks = {
+                    enabled = true, -- enable to use the following blocks
+                    "function_declaration",
+                    "function_definition",
+                    "method_declaration",
+                    "method_definition",
+                    "class_declaration",
+                    "class_definition",
+                    "do_statement",
+                    "while_statement",
+                    "if_statement",
+                    "for_statement",
+                },
+                -- these treesitter fields will be considered as blocks
+                field_blocks = {
+                    "local_declaration",
+                },
+            },
+        },
+        words = { enabled = true },
+        quickfile = { enabled = true },
+        indent = { enabled = true },
+        lazygit = { enabled = true },
 
-		input = { enabled = false },
-		notifier = { enabled = false },
-		scroll = { enabled = false },
-		statuscolumn = { enabled = false },
-		terminal = { enabled = true },
-	},
-	keys = {
+        input = { enabled = false },
+        notifier = { enabled = false },
+        scroll = { enabled = false },
+        statuscolumn = { enabled = false },
+        terminal = { enabled = true },
+        dashboard = {
+            preset = {
+                pick = function(cmd, opts)
+                    return Snacks.picker(cmd, opts)()
+                end,
+                header = [[
+░   ░░░  ░░░      ░░░        ░░        ░░░      ░░░  ░░░░  ░
+▒    ▒▒  ▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒
+▓  ▓  ▓  ▓▓▓      ▓▓▓      ▓▓▓▓▓▓▓  ▓▓▓▓▓▓      ▓▓▓        ▓
+█  ██    ████████  ██  ███████████  ███████████  ██  ████  █
+█  ███   ███      ███  ████████        ███      ███  ████  █
+ ]],
+                -- stylua: ignore
+                ---@type snacks.dashboard.Item[]
+                keys = {
+
+                    { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+                    { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+                    { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+                    { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                    { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+                    { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+
+                    { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
+                    { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+                    { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+                },
+            },
+        },
+    },
+    keys = {
 		-- Top Pickers & Explorer
 		{ "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
 		{ "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
@@ -92,7 +121,7 @@ return {
 		{ "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
 		{ "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
 		{ "grr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-		{ "gri", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+		{ "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
 		{ "grt", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
 		{ "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
 		{ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
@@ -102,6 +131,7 @@ return {
 		-- { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
 		-- { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
 		{ "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+		{ "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete Other Buffers" },
 		{ "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
 		{ "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
 		{ "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },

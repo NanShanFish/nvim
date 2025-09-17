@@ -7,6 +7,7 @@ opt.mouse = "a"                               -- Enable mouse support
 opt.clipboard = "unnamedplus"                 -- Copy/paste to system clipboard
 opt.swapfile = false                          -- Don't use swapfile
 opt.completeopt = "menuone,noinsert,noselect" -- Autocomplete options
+vim.o.undofile = true
 
 -----------------------------------------------------------
 -- Neovim UI
@@ -27,7 +28,8 @@ opt.list = true
 opt.listchars = "tab:| ,trail:·"
 opt.relativenumber = true
 vim.o.cmdheight = 0
-
+vim.diagnostic.enable = true
+vim.o.winborder = "single"
 -----------------------------------------------------------
 -- Tabs, indent
 -----------------------------------------------------------
@@ -114,6 +116,9 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.shiftwidth = 2
         vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true, buffer=0})
         vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true, buffer=0})
+        vim.keymap.set("i", ",", ",<c-g>u", { expr = true, silent = true, buffer = 0})
+        vim.keymap.set("i", ".", ".<c-g>u", { expr = true, silent = true, buffer = 0})
+        vim.keymap.set("i", ";", ";<c-g>u", { expr = true, silent = true, buffer = 0})
     end,
 })
 
@@ -128,6 +133,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
+vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    callback = function()
+        vim.diagnostic.config({
+            virtual_lines = false,
+        })
+    end
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+    pattern = "*",
+
+    callback = function()
+        vim.diagnostic.config({
+            virtual_lines = true,
+        })
+    end
+})
 -----------------------------------------------------------
 -- Plugins
 -----------------------------------------------------------

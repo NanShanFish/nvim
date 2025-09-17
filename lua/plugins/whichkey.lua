@@ -19,6 +19,7 @@ return {
 				{ "<leader>gh", group = "hunks" },
 				{ "<leader>q", group = "quit/session" },
 				{ "<leader>s", group = "search" },
+				{ "<leader>l", group = "lsp" },
 				{ "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
 				{ "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
 				{ "[", group = "prev" },
@@ -51,9 +52,6 @@ return {
 		wk.setup(opts)
 		wk.add({
 			{ "gr", group = "Lsp action" },
-			{ "grn", vim.lsp.buf.rename, desc = "Rename" },
-			{ "gri", vim.lsp.buf.implementation, desc = "Implementation" },
-			{ "gra", vim.lsp.buf.code_action, desc = "Code action" },
 		})
 	end
 }
