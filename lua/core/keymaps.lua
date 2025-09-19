@@ -91,6 +91,18 @@ if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<leader>uh")
 end
 
+vim.g.virtual_lines_enabled = true
+local function toggle_virtual_lines()
+    if vim.g.virtual_lines_enabled then
+        vim.diagnostic.config{ virtual_lines = false, virtual_text = true }
+        vim.g.virtual_lines_enabled = false
+    else
+        vim.diagnostic.config{ virtual_lines = true, virtual_text = false }
+        vim.g.virtual_lines_enabled = true
+    end
+end
+map("n", "<leader>ue", toggle_virtual_lines, { desc = "toggle error line"})
+
 
 -- -- Todo
 -- local function floating_notification(lines)

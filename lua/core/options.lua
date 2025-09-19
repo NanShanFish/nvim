@@ -8,7 +8,7 @@ opt.clipboard = "unnamedplus"                 -- Copy/paste to system clipboard
 opt.swapfile = false                          -- Don't use swapfile
 opt.completeopt = "menuone,noinsert,noselect" -- Autocomplete options
 vim.o.undofile = true
-
+vim.env.PATH = "/home/shan/.local/share/nvim/mason/bin/:" .. vim.env.PATH
 -----------------------------------------------------------
 -- Neovim UI
 -----------------------------------------------------------
@@ -44,7 +44,7 @@ g.autoformat = false         -- Disable format
 -----------------------------------------------------------
 opt.hidden = true            -- Enable background buffers
 opt.history = 100            -- Remember N lines in history
-opt.lazyredraw = true        -- Faster scrolling
+-- opt.lazyredraw = true        -- Faster scrolling
 opt.synmaxcol = 240          -- Max column for syntax highlight
 -- opt.updatetime = 250          -- ms to wait for trigger an event
 
@@ -145,9 +145,11 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     pattern = "*",
 
     callback = function()
-        vim.diagnostic.config({
-            virtual_lines = true,
-        })
+        if vim.g.virtual_lines_enabled then
+            vim.diagnostic.config({
+                virtual_lines = true,
+            })
+        end
     end
 })
 -----------------------------------------------------------

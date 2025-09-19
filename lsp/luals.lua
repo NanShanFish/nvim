@@ -4,6 +4,9 @@ return {
     root_markers = { ".luarc.json", ".git", vim.uv.cwd() },
     settings = {
         Lua = {
+            hint = {
+                enable = true,
+            },
             telemetry = {
                 enable = false,
             },

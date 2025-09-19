@@ -15,7 +15,19 @@ return {
             bottom_search = true, -- use a classic bottom cmdline for search
             command_palette = true, -- position the cmdline and popupmenu together
             lsp_doc_border = true, -- add a border to hover docs and signature help
+            long_message_to_split = true,
         },
+        routes = {
+            {
+                filter = { event = "msg_show", kind = {"shell_err", "shell_out"} },
+                view = "split",
+                opts = {
+                    level = 'info',
+                    skip = false,
+                    replace = false,
+                }
+            }
+        }
     },
     dependencies = {
         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries

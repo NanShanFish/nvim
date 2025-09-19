@@ -15,6 +15,7 @@ local config = {
     update_in_insert = true,
     underline = true,
     severity_sort = true,
+    virtual_lines = true,
     float = {
         focusable = true,
         style = "minimal",
@@ -153,7 +154,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- keymap("n", "gl", vim.diagnostic.open_float, opt("Open diagnostic in float"))
         keymap("n", "grn", lsp.buf.rename, opt("rename"))
         keymap("n", "gra", lsp.buf.code_action, opt("Code Action"))
-        keymap("n", "<C-k>", lsp.buf.signature_help, opts)
+        -- keymap("n", "<C-k>", lsp.buf.signature_help, opts)
         -- disable the default binding first before using a custom one
         pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
         keymap("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end, opt("Toggle hover"))
