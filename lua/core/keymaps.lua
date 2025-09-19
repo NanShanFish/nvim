@@ -104,6 +104,9 @@ end
 map("n", "<leader>ue", toggle_virtual_lines, { desc = "toggle error line"})
 
 
+-- ig => Entire Buffer text-object
+map({"o", "x"}, "ig", ":<C-u>normal! ggVG<cr>", { desc = "Entire Buffer" })
+
 -- -- Todo
 -- local function floating_notification(lines)
 --     if not lines or #lines == 0 then
