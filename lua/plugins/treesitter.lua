@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "InsertEnter", "VeryLazy" },
+		event = "User NsfLoad",
 		opts = {
 			highlight = { enable = true },
 			indent = { enable = true },
@@ -47,7 +47,7 @@ return {
 	},
 	{
 		'nvim-treesitter/nvim-treesitter-textobjects',
-		event = "VeryLazy",
-		dependencies = "nvim-treesitter/nvim-treesitter",
+		event = "User NsfLoad",
+		dependencies = { "nvim-treesitter/nvim-treesitter" }
 	}
 }

@@ -31,8 +31,8 @@ return {
     },
     dependencies = {
         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-        {"MunifTanjim/nui.nvim", event = "VimEnter"},
-        {"rcarriga/nvim-notify", event = "VimEnter"}
+        {"MunifTanjim/nui.nvim", event = "VeryLazy"},
+        {"rcarriga/nvim-notify", event = "VeryLazy"}
     }
 
 }
