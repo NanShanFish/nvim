@@ -20,11 +20,11 @@ return {
         routes = {
             {
                 filter = { event = "msg_show", kind = {"shell_err", "shell_out"} },
-                view = "split",
+                view = "notify",
                 opts = {
                     level = 'info',
-                    skip = false,
-                    replace = false,
+                    replace = true,
+                    title = "shell output"
                 }
             }
         }

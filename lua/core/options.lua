@@ -106,22 +106,6 @@ end
 -- 	end,
 -- })
 
--- Markdown
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "markdown" },
-    callback = function()
-        vim.wo.colorcolumn=""
-        vim.wo.wrap = true
-        vim.tabstop = 2
-        vim.bo.shiftwidth = 2
-        vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true, buffer=0})
-        vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true, buffer=0})
-        vim.keymap.set("i", ",", ",<c-g>u", { expr = true, silent = true, buffer = 0})
-        vim.keymap.set("i", ".", ".<c-g>u", { expr = true, silent = true, buffer = 0})
-        vim.keymap.set("i", ";", ";<c-g>u", { expr = true, silent = true, buffer = 0})
-    end,
-})
-
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -147,7 +131,7 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
         if vim.g.virtual_lines_enabled then
             vim.diagnostic.config({
-                virtual_lines = true,
+                virtual_lines = { current_line = true},
             })
         end
     end

@@ -1,0 +1,9 @@
+{
+	"macro_export": {
+		"prefix": "macro_export",
+		"body": [
+			"#[macro_export]"
+		],
+		"description": "Create a zero table"
+	}
+}

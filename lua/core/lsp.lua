@@ -15,7 +15,7 @@ local config = {
     update_in_insert = true,
     underline = true,
     severity_sort = true,
-    virtual_lines = true,
+    virtual_lines = { current_line = true},
     float = {
         focusable = true,
         style = "minimal",
@@ -150,7 +150,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         --     end
         -- end, opt("Get the definition in a float"))
         -- keymap("n", "gi", function() lsp.buf.implementation({ border = "single" })  end, opt("Go to implementation"))
-        -- keymap("n", "gr", lsp.buf.references, opt("Show References"))
+        keymap("n", "grr", lsp.buf.references, opt("Show References"))
         -- keymap("n", "gl", vim.diagnostic.open_float, opt("Open diagnostic in float"))
         keymap("n", "grn", lsp.buf.rename, opt("rename"))
         keymap("n", "gra", lsp.buf.code_action, opt("Code Action"))
@@ -164,8 +164,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         keymap("n", "grS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
         keymap("n", "grh", function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled({})) end, opt("Toggle Inlayhints"))
-        keymap("n", "gri", vim.cmd.LspInfo, opt("LspInfo"))
-        keymap("n", "grl", lsp.codelens.run, opt("Run CodeLens"))
+        keymap("n", "grl", vim.cmd.LspInfo, opt("LspInfo"))
+        keymap("n", "grc", lsp.codelens.run, opt("Run CodeLens"))
         keymap("n", "grs", lsp.buf.document_symbol, opt("Doument Symbols"))
 
         -- diagnostic mappings
@@ -198,6 +198,7 @@ vim.lsp.enable("luals-nvim")
 -- vim.lsp.enable("luals")
 vim.lsp.enable("clangd")
 vim.lsp.enable("rust_analyzer")
+-- vim.lsp.enable('asm-lsp')
 vim.lsp.enable("bashls")
 vim.lsp.enable("marksman")
 

@@ -3,21 +3,13 @@ return {
     event = "User NsfLoad",
     init = function()
         vim.g.lualine_laststatus = vim.o.laststatus
-        if vim.fn.argc(-1) > 0 then
-            -- set an empty statusline till lualine loads
-            vim.o.statusline = " "
-        else
-            -- hide the statusline on the starter page
-            vim.o.laststatus = 0
-        end
     end,
     opts = {
         options = {
             theme = "tokyonight",
             globalstatus = vim.o.laststatus == 3,
-            disabled_filetypes = { statusline = { "alpha" } },
             component_separators = '',
-            section_separators =  '',
+            section_separators =  { left = '▓▒░', right ='░▒▓' },
         },
         sections = {
             lualine_a = { "mode" },
@@ -31,6 +23,25 @@ return {
                     path = 4
                 },
                 {
+                    "diff",
+                    symbols = {
+                        added = "+",
+                        modified = "~",
+                        removed = "-",
+                    },
+                },
+                function ()
+                    local recording_register = vim.fn.reg_recording()
+                    if recording_register == "" then
+                        return ""
+                    else
+                        return "Recording @" .. recording_register
+                    end
+                end,
+            },
+
+            lualine_x = {
+                {
                     "diagnostics",
                     symbols = {
                         error ="✘",
@@ -40,27 +51,12 @@ return {
                     },
                 },
             },
-
-            lualine_x = {
-                {
-                    "diff",
-                    symbols = {
-                        added = "+",
-                        modified = "M",
-                        removed = "-",
-                    },
-                },
-                {'encoding'},
-                {'fileformat'},
-            },
             lualine_y = {
-                "location",
-                "progress"
+                'encoding',
+                'fileformat',
             },
             lualine_z = {
-                function()
-                    return " " .. os.date("%R")
-                end,
+                "progress"
             },
         },
     },

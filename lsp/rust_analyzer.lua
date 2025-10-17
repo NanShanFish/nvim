@@ -22,7 +22,10 @@ return {
 
         autoformat = false,
         ["rust-analyzer"] = {
-            cargo = { allFeatures = true },
+            cargo = {
+                allFeatures = true,
+                allTargets = false,
+            },
             check = {
                 command = "clippy",
             },

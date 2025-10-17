@@ -2,6 +2,34 @@ return {
     "folke/snacks.nvim",
     lazy = false,
     opts = {
+        picker = {
+            enabled = true,
+            ui_select = true,
+            layout = { cycle = false, },
+            matcher = {
+                cwd_bonus = true,
+                frecency = true,
+                history_bonus = true,
+            },
+            formatters = {
+                file = {
+                    filename_first = true,
+                    truncate = 80,
+                },
+                severity = {
+                    icons = true, -- show severity icons
+                    level = true, -- show severity level
+                    pos = "left", -- position of the diagnostics
+                },
+            },
+            win = {
+                input = {
+                    keys = {
+                        ["<Esc>"] = { "close", mode = { "n", "i" } },
+                    },
+                },
+            },
+        },
         bigfile = { enabled = true },
         explorer = { replace_netrw = true, },
         scope = {
@@ -27,9 +55,13 @@ return {
                 },
             },
         },
+        indent = {
+            chunk = {
+                enabled = true
+            },
+        },
         words = { enabled = true },
         quickfile = { enabled = true },
-        indent = { enabled = true },
         lazygit = { enabled = true },
 
         input = { enabled = false },
@@ -70,7 +102,6 @@ return {
                     { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
                     { icon = " ", key = "s", desc = "Restore Session", section = "session" },
 
-                    { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
                     { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
                     { icon = " ", key = "q", desc = "Quit", action = ":qa" },
                 },
@@ -130,8 +161,8 @@ return {
 		-- LSP
 		{ "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
 		{ "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-		{ "grr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-		{ "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+		-- { "grr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+		{ "gri", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
 		{ "grt", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
 		{ "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
 		{ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },

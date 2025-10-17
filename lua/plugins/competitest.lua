@@ -1,22 +1,17 @@
 return {
-	'xeluxee/competitest.nvim',
+	'git@github.com:NanShanFish/competitest.nvim.git',
+	branch = "runner-ui/all-in-one-ops",
+	enable = true,
 	dependencies = 'MunifTanjim/nui.nvim',
 	keys = {
 		{ "\\r", "<cmd>CompetiTest run<cr>", desc = "Run testcase" },
-		{ "\\a", "<cmd>CompetiTest add_testcase<cr>", desc = "Add testcase" },
 		{ "\\c", "<cmd>CompetiTest run_no_compile<cr>", desc = "Run without compile" },
-		{ "\\e", "<cmd>CompetiTest edit_testcase<cr>", desc = "Edit testcase" },
 		{ "\\d", "<cmd>CompetiTest delete_testcase<cr>", desc = "Delete testcase" },
 		{ "\\<space>", "<cmd>CompetiTest show_ui<cr>", desc = "Show last ui" },
 	},
 	config = function() require('competitest').setup {
 		floating_border = 'single',
 		compile_directory = "./output/",
-		picker_ui = {
-			mappings = {
-				submit = { "<cr>","l" },
-			},
-		},
 		compile_command = {
 			c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "output/$(FNOEXT)" } },
 			cpp = { exec = "g++", args = { "-Wall", "$(FABSPATH)", "-o", "$(ABSDIR)/output/$(FNOEXT)" } },

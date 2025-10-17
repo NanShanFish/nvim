@@ -1,7 +1,7 @@
 return {
     cmd = {'lua-language-server'},
     filetypes = {'lua'},
-    root_markers = {'.nvim-root'},
+    root_markers = {".nvim-root", ".luarc.json", ".git", vim.uv.cwd() },
     settings = {
         Lua = {
             hint = {

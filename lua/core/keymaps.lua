@@ -15,10 +15,6 @@ map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 map('', "<LeftDrag>", "", opt)
 map('', "<LeftRelease>", "", opt)
 
--- Buffer
-map("n", "H", "<cmd>bprev<cr>", opt)
-map("n", "L", "<cmd>bn<cr>", opt)
-
 -- better indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
@@ -50,6 +46,9 @@ map("i","<C-;>","<C-o>:",opt)
 map("v", "K", "k", opt)
 
 map("n", "<leader>cs", "<cmd>LspRestart<cr>", opt)
+
+-- CmdLine
+map("c", "<C-a>", "<Home>", opt)
 
 -- Placeholder
 local function find_placeholder(direction)
@@ -97,7 +96,7 @@ local function toggle_virtual_lines()
         vim.diagnostic.config{ virtual_lines = false, virtual_text = true }
         vim.g.virtual_lines_enabled = false
     else
-        vim.diagnostic.config{ virtual_lines = true, virtual_text = false }
+        vim.diagnostic.config{ virtual_lines = { current_line = true }, virtual_text = false }
         vim.g.virtual_lines_enabled = true
     end
 end
@@ -106,48 +105,3 @@ map("n", "<leader>ue", toggle_virtual_lines, { desc = "toggle error line"})
 
 -- ig => Entire Buffer text-object
 map({"o", "x"}, "ig", ":<C-u>normal! ggVG<cr>", { desc = "Entire Buffer" })
-
--- -- Todo
--- local function floating_notification(lines)
---     if not lines or #lines == 0 then
---         print("input is empty")
---         return
---     end
---
---     local buf = vim.api.nvim_create_buf(false, true)
---     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
---
---     local max_width = 0
---     for _, line in ipairs(lines) do
---         max_width = math.max(max_width, vim.fn.strdisplaywidth(line))
---     end
---     local width = math.min(max_width + 2, vim.o.columns - 4)  -- 限制最大宽度
---     local height = math.min(#lines, vim.o.lines - 4)           -- 限制最大高度
---
---     local win_opts = {
---         relative = "editor",
---         anchor = "SE",
---         width = width,
---         height = height,
---         row = vim.o.lines - 1,
---         col = vim.o.columns - 1,
---         style = "minimal",
---         border = "rounded",
---         title = "Todo List",
---         title_pos = "center",
---         focusable = false,
---     }
---
---     local win = vim.api.nvim_open_win(buf, false, win_opts)
---
---     vim.defer_fn(function()
---         if vim.api.nvim_win_is_valid(win) then
---             vim.api.nvim_win_close(win, true)
---         end
---         if vim.api.nvim_buf_is_valid(buf) then
---             vim.api.nvim_buf_delete(buf, { force = true })
---         end
---     end, 30000)
--- end
--- vim.keymap.set("n", "<leader>ft", function() local todo=vim.fn.systemlist("bash ~/scr/todo.sh"); floating_notification(todo) end, {desc = "Query todo"})
--- vim.keymap.set("n", "<leader>fT", function() vim.cmd("rightbelow vsplit " .. "~/doc/notes/2-daily/Todo/todo.md"); vim.api.nvim_win_set_width(0, 80); end, {desc = "Open todo file"})
