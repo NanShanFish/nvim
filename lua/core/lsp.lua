@@ -84,10 +84,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.config("*", {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        local ok, diag = pcall(require, "rj.extras.workspace-diagnostic")
-        if ok then
-            diag.populate_workspace_diagnostics(client, bufnr)
-        end
     end,
 })
 
@@ -202,6 +198,7 @@ vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("bashls")
 vim.lsp.enable("marksman")
 vim.lsp.enable("basedpyright")
+vim.lsp.enable("hls")
 
 
 -- -- Go {{{

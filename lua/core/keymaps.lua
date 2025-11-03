@@ -24,10 +24,22 @@ map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 -- Move around splits using Ctrl + {h,j,k,l}
-map('n', '<C-h>', '<C-w>h',opt)
-map('n', '<C-j>', '<C-w>w',opt)
-map('n', '<C-k>', '<C-w>W',opt)
-map('n', '<C-l>', '<C-w>l',opt)
+map({"n", "t"}, '<C-h>', '<C-\\><C-n><C-w>h',opt)
+map({"n", "t"}, '<C-j>', '<C-\\><C-n><C-w>w',opt)
+map({"n", "t"}, '<C-k>', '<C-\\><C-n><C-w>W',opt)
+map({"n", "t"}, '<C-l>', '<C-\\><C-n><C-w>l',opt)
+
+vim.api.nvim_create_user_command("Te", function (opts)
+    local command_to_run = opts.args
+    vim.cmd("w | 40vs")
+    vim.cmd("term " .. command_to_run)
+    vim.cmd("startinsert")
+end, {
+        nargs = "*",
+        complete = "file"
+})
+map( {"n", "i", "x"}, '<F5>', "<cmd>Te make<cr>", opt)
+map( {"n", "x"}, '\\\\', ":Te ", opt)
 
 -- Esc
 map({ "i", "n", "s" }, "<esc>", function()

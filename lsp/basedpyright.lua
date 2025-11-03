@@ -3,10 +3,10 @@ return {
 
     filetypes = { "python" },
     cmd = { "basedpyright-langserver", "--stdio" },
+    root_markers = { ".git", ".pyproject.toml", },
     settings = {
         python = {
-
-            venvPath = vim.fn.expand("~") .. "/.virtualenvs",
+            "./.venv",
         },
         basedpyright = {
             disableOrganizeImports = true,
@@ -15,7 +15,7 @@ return {
                 autoImportCompletions = true,
                 useLibraryCodeForTypes = true,
                 diagnosticMode = "openFilesOnly",
-                typeCheckingMode = "strict",
+                typeCheckingMode = "recommended",
                 inlayHints = {
                     variableTypes = true,
                     callArgumentNames = true,

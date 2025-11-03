@@ -92,20 +92,6 @@ end
 -----------------------------------------------------------
 -- Autocmd
 -----------------------------------------------------------
--- -- Python
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = { "python" },
--- 	callback = function()
--- 	end,
--- })
-
--- -- C/Cpp
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = { "cpp", "c" },
--- 	callback = function()
--- 	end,
--- })
-
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),

@@ -1,4 +1,3 @@
-vim.g.maplocalleader = '\\'
 vim.wo.colorcolumn=""
 vim.wo.wrap = true
 vim.keymap.set("x", "<localleader>b", "\"1c**<C-R>1**<ESC>", { silent = true, buffer = 0 })
