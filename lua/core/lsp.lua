@@ -1,69 +1,66 @@
--- Initially taken from [NTBBloodbath](https://github.com/NTBBloodbath/nvim/blob/main/lua/core/lsp.lua)
--- modified almost 80% by me
-
 -- Diagnostics {{{
 local config = {
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = "✘",
-            [vim.diagnostic.severity.WARN] = "▲",
-            [vim.diagnostic.severity.HINT] = "!",
-            [vim.diagnostic.severity.INFO] = "»",
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "✘",
+      [vim.diagnostic.severity.WARN] = "▲",
+      [vim.diagnostic.severity.HINT] = "!",
+      [vim.diagnostic.severity.INFO] = "»",
 
-        },
     },
-    update_in_insert = true,
-    underline = true,
-    severity_sort = true,
-    virtual_lines = { current_line = true},
-    float = {
-        focusable = true,
-        style = "minimal",
-        border = "single",
+  },
+  update_in_insert = true,
+  underline = true,
+  severity_sort = true,
+  virtual_lines = { current_line = true},
+  float = {
+    focusable = true,
+    style = "minimal",
+    border = "single",
 
-        source = "always",
-        header = "",
-        prefix = "",
-        suffix = "",
-    },
+    source = "always",
+    header = "",
+    prefix = "",
+    suffix = "",
+  },
 }
 vim.diagnostic.config(config)
 -- }}}
 
 -- Improve LSPs UI {{{
 local icons = {
-    Class = " ",
-    Color = " ",
-    Constant = " ",
-    Constructor = " ",
-    Enum = " ",
-    EnumMember = " ",
-    Event = " ",
-    Field = " ",
-    File = " ",
-    Folder = " ",
-    Function = "󰊕 ",
-    Interface = " ",
+  Class = " ",
+  Color = " ",
+  Constant = " ",
+  Constructor = " ",
+  Enum = " ",
+  EnumMember = " ",
+  Event = " ",
+  Field = " ",
+  File = " ",
+  Folder = " ",
+  Function = "󰊕 ",
+  Interface = " ",
 
-    Keyword = " ",
-    Method = "ƒ ",
-    Module = "󰏗 ",
-    Property = " ",
-    Snippet = " ",
-    Struct = " ",
+  Keyword = " ",
+  Method = "ƒ ",
+  Module = "󰏗 ",
+  Property = " ",
+  Snippet = " ",
+  Struct = " ",
 
-    Text = " ",
-    Unit = " ",
+  Text = " ",
+  Unit = " ",
 
-    Value = " ",
-    Variable = " ",
+  Value = " ",
+  Variable = " ",
 }
 
 local completion_kinds = vim.lsp.protocol.CompletionItemKind
 
 for i, kind in ipairs(completion_kinds) do
 
-    completion_kinds[i] = icons[kind] and icons[kind] .. kind or kind
+  completion_kinds[i] = icons[kind] and icons[kind] .. kind or kind
 
 end
 -- }}}
@@ -73,8 +70,8 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.foldingRange = {
-    dynamicRegistration = true,
-    lineFoldingOnly = true,
+  dynamicRegistration = true,
+  lineFoldingOnly = true,
 }
 
 capabilities.textDocument.semanticTokens.multilineTokenSupport = true
@@ -82,16 +79,16 @@ capabilities.textDocument.semanticTokens.multilineTokenSupport = true
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.lsp.config("*", {
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-    end,
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+  end,
 })
 
 -- }}}
 
 -- Disable the default keybinds {{{
 for _, bind in ipairs({ "grn", "gra", "gri", "grr" }) do
-    pcall(vim.keymap.del, "n", bind)
+  pcall(vim.keymap.del, "n", bind)
 end
 
 -- }}}
@@ -100,128 +97,265 @@ end
 -- Create keybindings, commands, inlay hints and autocommands on LSP attach {{{
 
 vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(ev)
-        vim.lsp.inlay_hint.enable(true)
-        local bufnr = ev.buf
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if not client then
-            return
-        end
+  callback = function(ev)
+    vim.lsp.inlay_hint.enable(true)
+    local bufnr = ev.buf
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if not client then
+      return
+    end
 
-        ---@diagnostic disable-next-line need-check-nil
-        if client.server_capabilities.completionProvider then
-            vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-            -- vim.bo[bufnr].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
-        end
-        ---@diagnostic disable-next-line need-check-nil
-        if client.server_capabilities.definitionProvider then
-            vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
-        end
+    ---@diagnostic disable-next-line need-check-nil
+    if client.server_capabilities.completionProvider then
+      vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+      -- vim.bo[bufnr].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
+    end
+    ---@diagnostic disable-next-line need-check-nil
+    if client.server_capabilities.definitionProvider then
+      vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+    end
 
-        -- -- nightly has inbuilt completions, this can replace all completion plugins
+    -- -- nightly has inbuilt completions, this can replace all completion plugins
 
-        -- if client:supports_method("textDocument/completion", bufnr) then
+    -- if client:supports_method("textDocument/completion", bufnr) then
 
-        --   -- Enable auto-completion
-        --   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-        -- end
+    --   -- Enable auto-completion
+    --   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    -- end
 
-        --- Disable semantic tokens
-        ---@diagnostic disable-next-line need-check-nil
-        client.server_capabilities.semanticTokensProvider = nil
+    --- Disable semantic tokens
+    ---@diagnostic disable-next-line need-check-nil
+    client.server_capabilities.semanticTokensProvider = nil
 
-        -- All the keymaps
-        -- stylua: ignore start
-        local keymap = vim.keymap.set
-        local lsp = vim.lsp
-        local opts = { silent = true }
-        local function opt(desc, others)
-            return vim.tbl_extend("force", opts, { desc = desc }, others or {})
-        end
-        -- keymap("n", "gd", lsp.buf.definition, opt("Go to definition"))
-        -- keymap("n", "gD", function()
-        --     local ok, diag = pcall(require, "rj.extras.definition")
-        --     if ok then
-        --         diag.get_def()
-        --     end
-        -- end, opt("Get the definition in a float"))
-        -- keymap("n", "gi", function() lsp.buf.implementation({ border = "single" })  end, opt("Go to implementation"))
-        keymap("n", "grr", lsp.buf.references, opt("Show References"))
-        -- keymap("n", "gl", vim.diagnostic.open_float, opt("Open diagnostic in float"))
-        keymap("n", "grn", lsp.buf.rename, opt("rename"))
-        keymap("n", "gra", lsp.buf.code_action, opt("Code Action"))
-        -- keymap("n", "<C-k>", lsp.buf.signature_help, opts)
-        -- disable the default binding first before using a custom one
-        pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
-        keymap("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end, opt("Toggle hover"))
+    -- All the keymaps
+    -- stylua: ignore start
+    local keymap = vim.keymap.set
+    local lsp = vim.lsp
+    local opts = { silent = true }
+    local function opt(desc, others)
+      return vim.tbl_extend("force", opts, { desc = desc }, others or {})
+    end
+    -- keymap("n", "gd", lsp.buf.definition, opt("Go to definition"))
+    -- keymap("n", "gD", function()
+    --  local ok, diag = pcall(require, "rj.extras.definition")
+    --  if ok then
+    --   diag.get_def()
+    --  end
+    -- end, opt("Get the definition in a float"))
+    -- keymap("n", "gi", function() lsp.buf.implementation({ border = "single" })  end, opt("Go to implementation"))
+    keymap("n", "grr", lsp.buf.references, opt("Show References"))
+    -- keymap("n", "gl", vim.diagnostic.open_float, opt("Open diagnostic in float"))
+    keymap("n", "grn", lsp.buf.rename, opt("rename"))
+    keymap("n", "gra", lsp.buf.code_action, opt("Code Action"))
+    -- keymap("n", "<C-k>", lsp.buf.signature_help, opts)
+    -- disable the default binding first before using a custom one
+    pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
+    keymap("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end, opt("Toggle hover"))
 
-        keymap("n", "grF", vim.cmd.FormatToggle, opt("Toggle AutoFormat"))
-        keymap("n", "grI", vim.cmd.Mason, opt("Mason"))
+    keymap("n", "grF", vim.cmd.FormatToggle, opt("Toggle AutoFormat"))
+    keymap("n", "grI", vim.cmd.Mason, opt("Mason"))
 
-        keymap("n", "grS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
-        keymap("n", "grh", function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled({})) end, opt("Toggle Inlayhints"))
-        keymap("n", "grl", vim.cmd.LspInfo, opt("LspInfo"))
-        keymap("n", "grc", lsp.codelens.run, opt("Run CodeLens"))
-        keymap("n", "grs", lsp.buf.document_symbol, opt("Doument Symbols"))
+    keymap("n", "grS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
+    keymap("n", "grh", function() lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled({})) end, opt("Toggle Inlayhints"))
+    keymap("n", "grl", vim.cmd.LspInfo, opt("LspInfo"))
+    keymap("n", "grc", lsp.codelens.run, opt("Run CodeLens"))
+    keymap("n", "grs", lsp.buf.document_symbol, opt("Doument Symbols"))
 
-        -- diagnostic mappings
-        local diagnostic_goto = function(next, severity)
-          severity = severity and vim.diagnostic.severity[severity] or nil
-          return function()
-            vim.diagnostic.jump({
-                    count= next and 1 or -1,
-                    severity = severity,
-                    float = true,
-                })
-          end
-        end
-        keymap("n", "]d", diagnostic_goto(true), opt("Next Diagnostic"))
-        keymap("n", "[d", diagnostic_goto(false), opt("Prev Diagnostic"))
-        keymap("n", "]e", diagnostic_goto(true, "ERROR"), opt("Next Error"))
-        keymap("n", "[e", diagnostic_goto(false, "ERROR"), opt("Prev Error"))
-        keymap("n", "]w", diagnostic_goto(true, "WARN"), opt("Next Warning"))
-        keymap("n", "[w", diagnostic_goto(false, "WARN"), opt("Prev Warning"))
-        keymap("n", "<Leader>dq", vim.diagnostic.setloclist, opt("Set LocList"))
-        -- stylua: ignore end
-    end,
+    -- diagnostic mappings
+    local diagnostic_goto = function(next, severity)
+      severity = severity and vim.diagnostic.severity[severity] or nil
+      return function()
+        vim.diagnostic.jump({
+          count= next and 1 or -1,
+          severity = severity,
+          float = true,
+        })
+      end
+    end
+    keymap("n", "]d", diagnostic_goto(true), opt("Next Diagnostic"))
+    keymap("n", "[d", diagnostic_goto(false), opt("Prev Diagnostic"))
+    keymap("n", "]e", diagnostic_goto(true, "ERROR"), opt("Next Error"))
+    keymap("n", "[e", diagnostic_goto(false, "ERROR"), opt("Prev Error"))
+    keymap("n", "]w", diagnostic_goto(true, "WARN"), opt("Next Warning"))
+    keymap("n", "[w", diagnostic_goto(false, "WARN"), opt("Prev Warning"))
+    keymap("n", "<Leader>dq", vim.diagnostic.setloclist, opt("Set LocList"))
+    -- stylua: ignore end
+  end,
 })
 -- }}}
 
 
 -- Servers {{{
+vim.lsp.config.luals = {
+  cmd = {'lua-language-server'},
+  filetypes = {'lua'},
+  root_markers = { ".luarc.json", ".git", vim.uv.cwd() },
+  settings = {
+    Lua = {
+      hint = {
+        enable = true,
+        arrayIndex = "Disable"
+      },
+      runtime = {
+        version = 'LuaJIT',
+        path = {'lua/?.lua', 'lua/?/init.lua'},
+      },
+      diagnostics = {
+        globals = {'vim', 'Snacks'},
+      },
+      telemetry = {
+        enable = false,
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+        },
+      },
+    },
+  },
+}
+vim.lsp.enable('luals')
 
-vim.lsp.enable("luals-nvim")
--- vim.lsp.enable("luals")
-vim.lsp.enable("clangd")
-vim.lsp.enable("rust_analyzer")
--- vim.lsp.enable('asm-lsp')
-vim.lsp.enable("bashls")
-vim.lsp.enable("marksman")
-vim.lsp.enable("basedpyright")
-vim.lsp.enable("hls")
+vim.lsp.config.rust_analyzer = {
+  filetypes = { "rust" },
+  cmd = { "rust-analyzer" },
+  workspace_required = true,
+  root_dir = function(buf, cb)
+    local root = vim.fs.root(buf, { "Cargo.toml", "rust-project.json" })
+    local out = vim.system({ "cargo", "metadata", "--no-deps", "--format-version", "1" }, { cwd = root }):wait()
+    if out.code ~= 0 then
+      return cb(root)
+    end
 
+    local ok, result = pcall(vim.json.decode, out.stdout)
 
+    if ok and result.workspace_root then
+      return cb(result.workspace_root)
+
+    end
+
+    return cb(root)
+  end,
+  settings = {
+    autoformat = false,
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+        allTargets = false,
+      },
+      check = { enable = false },
+      checkOnSave = false,
+    },
+  },
+}
+
+vim.lsp.config.bashls = {
+  cmd = { "bash-language-server", "start" },
+  filetypes = { "bash", "sh", "zsh" },
+  root_markers = { ".git", vim.uv.cwd() },
+  settings = {
+    bashIde = {
+      globPattern = vim.env.GLOB_PATTERN or "*@(.sh|.inc|.bash|.command)",
+    },
+  },
+}
+
+vim.lsp.config.clangd = {
+  cmd = {
+    "clangd",
+    "-j=" .. 2,
+    "--background-index",
+    "--clang-tidy",
+    "--inlay-hints",
+    "--fallback-style=llvm",
+    "--all-scopes-completion",
+    "--completion-style=detailed",
+
+    "--header-insertion=iwyu",
+    "--header-insertion-decorators",
+    "--pch-storage=memory",
+  },
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+  root_markers = {
+    "CMakeLists.txt",
+    ".clangd",
+    ".clang-tidy",
+    ".clang-format",
+    "compile_commands.json",
+    "compile_flags.txt",
+    "configure.ac",
+    ".git",
+    vim.uv.cwd(),
+  },
+}
+
+vim.lsp.config.basedpyright = {
+  filetypes = { "python" },
+  cmd = { "basedpyright-langserver", "--stdio" },
+  root_markers = { ".git", ".pyproject.toml", },
+  settings = {
+    python = {
+      venvPath = "./.venv",
+    },
+    basedpyright = {
+      disableOrganizeImports = true,
+      analysis = {
+        autoSearchPaths = true,
+        autoImportCompletions = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "openFilesOnly",
+        typeCheckingMode = "recommended",
+        inlayHints = {
+          variableTypes = true,
+          callArgumentNames = true,
+
+          functionReturnTypes = true,
+          genericTypes = false,
+        },
+      },
+    },
+  },
+}
+
+vim.lsp.config.hls = {
+  cmd = { 'haskell-language-server-wrapper', '--lsp' },
+  filetypes = { 'haskell', 'lhaskell' },
+  root_markers = { ".git", "package.yaml", "hie.yaml", },
+  settings = {
+    haskell = {
+      formattingProvider = 'ormolu',
+      cabalFormattingProvider = 'cabalfmt',
+    },
+  },
+}
+
+vim.lsp.config.marksman = {
+  cmd = { 'marksman', 'server' },
+  filetypes = {'markdown', 'markdown.mdx'},
+  root_markers = { '.marksman.toml', '.git' },
+}
 -- -- Go {{{
 -- vim.lsp.config.gopls = {
---     cmd = { "gopls" },
---     filetypes = { "go", "gotempl", "gowork", "gomod" },
---     root_markers = { ".git", "go.mod", "go.work", vim.uv.cwd() },
---     settings = {
---         gopls = {
---             completeUnimported = true,
---             usePlaceholders = true,
---             analyses = {
---                 unusedparams = true,
---             },
---             ["ui.inlayhint.hints"] = {
---                 compositeLiteralFields = true,
---                 constantValues = true,
---                 parameterNames = true,
---                 rangeVariableTypes = true,
+--  cmd = { "gopls" },
+--  filetypes = { "go", "gotempl", "gowork", "gomod" },
+--  root_markers = { ".git", "go.mod", "go.work", vim.uv.cwd() },
+--  settings = {
+--   gopls = {
+--  completeUnimported = true,
+--  usePlaceholders = true,
+--  analyses = {
+--   unusedparams = true,
+--  },
+--  ["ui.inlayhint.hints"] = {
+--   compositeLiteralFields = true,
+--   constantValues = true,
+--   parameterNames = true,
+--   rangeVariableTypes = true,
 --
---             },
---         },
---     },
+--  },
+--   },
+--  },
 -- }
 -- vim.lsp.enable("gopls")
 -- -- }}}
@@ -229,9 +363,9 @@ vim.lsp.enable("hls")
 -- -- Typst {{{
 --
 -- vim.lsp.config.tinymist = {
---     cmd = { "tinymist" },
---     filetypes = { "typst" },
---     root_markers = { ".git", vim.uv.cwd() },
+--  cmd = { "tinymist" },
+--  filetypes = { "typst" },
+--  root_markers = { ".git", vim.uv.cwd() },
 -- }
 --
 -- vim.lsp.enable("tinymist")
@@ -240,26 +374,26 @@ vim.lsp.enable("hls")
 -- -- Web-dev {{{
 -- -- TSServer {{{
 -- vim.lsp.config.ts_ls = {
---     cmd = { "typescript-language-server", "--stdio" },
---     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+--  cmd = { "typescript-language-server", "--stdio" },
+--  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 --
---     root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+--  root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
 --
---     init_options = {
---         hostInfo = "neovim",
---     },
+--  init_options = {
+--   hostInfo = "neovim",
+--  },
 -- }
 --
 -- -- }}}
 --
 -- -- CSSls {{{
 -- vim.lsp.config.cssls = {
---     cmd = { "vscode-css-language-server", "--stdio" },
---     filetypes = { "css", "scss" },
---     root_markers = { "package.json", ".git" },
---     init_options = {
---         provideFormatter = true,
---     },
+--  cmd = { "vscode-css-language-server", "--stdio" },
+--  filetypes = { "css", "scss" },
+--  root_markers = { "package.json", ".git" },
+--  init_options = {
+--   provideFormatter = true,
+--  },
 -- }
 --
 -- -- }}}
@@ -267,69 +401,69 @@ vim.lsp.enable("hls")
 --
 -- -- TailwindCss {{{
 -- vim.lsp.config.tailwindcssls = {
---     cmd = { "tailwindcss-language-server", "--stdio" },
---     filetypes = {
---         "ejs",
---         "html",
---         "css",
---         "scss",
---         "javascript",
---         "javascriptreact",
---         "typescript",
---         "typescriptreact",
---     },
---     root_markers = {
---         "tailwind.config.js",
---         "tailwind.config.cjs",
---         "tailwind.config.mjs",
---         "tailwind.config.ts",
+--  cmd = { "tailwindcss-language-server", "--stdio" },
+--  filetypes = {
+--   "ejs",
+--   "html",
+--   "css",
+--   "scss",
+--   "javascript",
+--   "javascriptreact",
+--   "typescript",
+--   "typescriptreact",
+--  },
+--  root_markers = {
+--   "tailwind.config.js",
+--   "tailwind.config.cjs",
+--   "tailwind.config.mjs",
+--   "tailwind.config.ts",
 --
---         "postcss.config.js",
---         "postcss.config.cjs",
---         "postcss.config.mjs",
---         "postcss.config.ts",
---         "package.json",
---         "node_modules",
---     },
---     settings = {
---         tailwindCSS = {
---             classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
---             includeLanguages = {
---                 eelixir = "html-eex",
---                 eruby = "erb",
---                 htmlangular = "html",
---                 templ = "html",
+--   "postcss.config.js",
+--   "postcss.config.cjs",
+--   "postcss.config.mjs",
+--   "postcss.config.ts",
+--   "package.json",
+--   "node_modules",
+--  },
+--  settings = {
+--   tailwindCSS = {
+--  classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
+--  includeLanguages = {
+--   eelixir = "html-eex",
+--   eruby = "erb",
+--   htmlangular = "html",
+--   templ = "html",
 --
---             },
---             lint = {
---                 cssConflict = "warning",
---                 invalidApply = "error",
---                 invalidConfigPath = "error",
---                 invalidScreen = "error",
---                 invalidTailwindDirective = "error",
---                 invalidVariant = "error",
---                 recommendedVariantOrder = "warning",
---             },
---             validate = true,
---         },
---     },
+--  },
+--  lint = {
+--   cssConflict = "warning",
+--   invalidApply = "error",
+--   invalidConfigPath = "error",
+--   invalidScreen = "error",
+--   invalidTailwindDirective = "error",
+--   invalidVariant = "error",
+--   recommendedVariantOrder = "warning",
+--  },
+--  validate = true,
+--   },
+--  },
 -- }
 -- -- }}}
 --
 -- -- HTML {{{
 -- vim.lsp.config.htmlls = {
---     cmd = { "vscode-html-language-server", "--stdio" },
---     filetypes = { "html" },
---     root_markers = { "package.json", ".git" },
+--  cmd = { "vscode-html-language-server", "--stdio" },
+--  filetypes = { "html" },
+--  root_markers = { "package.json", ".git" },
 --
---     init_options = {
---         configurationSection = { "html", "css", "javascript" },
---         embeddedLanguages = {
---             css = true,
---             javascript = true,
---         },
---         provideFormatter = true,
---     },
+--  init_options = {
+--   configurationSection = { "html", "css", "javascript" },
+--   embeddedLanguages = {
+--  css = true,
+--  javascript = true,
+--   },
+--   provideFormatter = true,
+--  },
 -- }
 -- -- }}}
 --
@@ -354,18 +488,18 @@ vim.api.nvim_create_user_command("LspStop", function(opts)
     end
   end
 end, {
-  desc = "Stop all LSP clients or a specific client attached to the current buffer.",
-  nargs = "?",
-  complete = function(_, _, _)
-    local clients = vim.lsp.get_clients({ bufnr = 0 })
-    local client_names = {}
-    for _, client in ipairs(clients) do
-      table.insert(client_names, client.name)
+    desc = "Stop all LSP clients or a specific client attached to the current buffer.",
+    nargs = "?",
+    complete = function(_, _, _)
+      local clients = vim.lsp.get_clients({ bufnr = 0 })
+      local client_names = {}
+      for _, client in ipairs(clients) do
+        table.insert(client_names, client.name)
 
-    end
-    return client_names
-  end,
-})
+      end
+      return client_names
+    end,
+  })
 
 
 vim.api.nvim_create_user_command("LspRestart", function()
@@ -403,20 +537,20 @@ vim.api.nvim_create_user_command("LspRestart", function()
     end)
   )
 end, {
-  desc = "Restart all the language client(s) attached to the current buffer",
-})
+    desc = "Restart all the language client(s) attached to the current buffer",
+  })
 
 vim.api.nvim_create_user_command("LspLog", function()
   vim.cmd.vsplit(vim.lsp.log.get_filename())
 end, {
-  desc = "Get all the lsp logs",
-})
+    desc = "Get all the lsp logs",
+  })
 
 vim.api.nvim_create_user_command("LspInfo", function()
   vim.cmd("silent checkhealth vim.lsp")
 end, {
-  desc = "Get all the information about all LSP attached",
-})
+    desc = "Get all the information about all LSP attached",
+  })
 -- }}}
 
 -- vim: fdm=marker:fdl=0

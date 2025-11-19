@@ -1,6 +1,6 @@
 return {
-    "mason-org/mason.nvim",
-    -- event = "VeryLazy",
-    opts = {},
-    cmd = "Mason"
+  "mason-org/mason.nvim",
+  -- event = "VeryLazy",
+  opts = {},
+  cmd = "Mason"
 }

@@ -10,3 +10,4 @@ vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", ex
 -- vim.keymap.set("i", ",", ",u", { expr = true, silent = true, buffer = 0})
 -- vim.keymap.set("i", ".", ".u", { expr = true, silent = true, buffer = 0})
 -- vim.keymap.set("i", ";", ";u", { expr = true, silent = true, buffer = 0})
+vim.lsp.enable("marksman")

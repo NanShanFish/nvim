@@ -30,21 +30,22 @@ map({"n", "t"}, '<C-k>', '<C-\\><C-n><C-w>W',opt)
 map({"n", "t"}, '<C-l>', '<C-\\><C-n><C-w>l',opt)
 
 vim.api.nvim_create_user_command("Te", function (opts)
-    local command_to_run = opts.args
-    vim.cmd("w | 40vs")
-    vim.cmd("term " .. command_to_run)
-    vim.cmd("startinsert")
+  local command_to_run = opts.args
+  vim.cmd("w | 40vs")
+  vim.cmd("term " .. command_to_run)
+  vim.cmd("startinsert")
 end, {
-        nargs = "*",
-        complete = "file"
-})
+    nargs = "*",
+    complete = "file"
+  })
 map( {"n", "i", "x"}, '<F5>', "<cmd>Te make<cr>", opt)
+map( {"n", "i", "x"}, '<F6>', "<cmd>Te make %:t:r<cr>", opt)
 map( {"n", "x"}, '\\\\', ":Te ", opt)
 
 -- Esc
 map({ "i", "n", "s" }, "<esc>", function()
-    vim.cmd("noh")
-    return "<esc>"
+  vim.cmd("noh")
+  return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
 -- Term Mode
@@ -64,14 +65,14 @@ map("c", "<C-a>", "<Home>", opt)
 
 -- Placeholder
 local function find_placeholder(direction)
-    vim.api.nvim_feedkeys("", "n", false)
-    if direction == 'w' then
-        vim.fn.search("<++>", 'w')
-        vim.api.nvim_feedkeys("lva<", "n", false)
-    else
-        vim.fn.search("<++>", 'b')
-        vim.api.nvim_feedkeys("lva<o", "n", false)
-    end
+  vim.api.nvim_feedkeys("", "n", false)
+  if direction == 'w' then
+    vim.fn.search("<++>", 'w')
+    vim.api.nvim_feedkeys("lva<", "n", false)
+  else
+    vim.fn.search("<++>", 'b')
+    vim.api.nvim_feedkeys("lva<o", "n", false)
+  end
 end
 map({"n","v"}, "<C-n>", function() find_placeholder("w") end, { desc = "goto next placeholder"})
 map({"n","v"}, "<C-p>", function() find_placeholder("b") end, { desc = "goto prev placeholder"})
@@ -104,13 +105,13 @@ end
 
 vim.g.virtual_lines_enabled = true
 local function toggle_virtual_lines()
-    if vim.g.virtual_lines_enabled then
-        vim.diagnostic.config{ virtual_lines = false, virtual_text = true }
-        vim.g.virtual_lines_enabled = false
-    else
-        vim.diagnostic.config{ virtual_lines = { current_line = true }, virtual_text = false }
-        vim.g.virtual_lines_enabled = true
-    end
+  if vim.g.virtual_lines_enabled then
+    vim.diagnostic.config{ virtual_lines = false, virtual_text = true }
+    vim.g.virtual_lines_enabled = false
+  else
+    vim.diagnostic.config{ virtual_lines = { current_line = true }, virtual_text = false }
+    vim.g.virtual_lines_enabled = true
+  end
 end
 map("n", "<leader>ue", toggle_virtual_lines, { desc = "toggle error line"})
 

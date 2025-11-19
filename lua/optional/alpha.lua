@@ -8,8 +8,8 @@ return {
 -- ██╔════╝██║██╔════╝██║  ██║
 -- █████╗  ██║███████╗███████║
 -- ██╔══╝  ██║╚════██║██╔══██║
--- ██║     ██║███████║██║  ██║
--- ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
+-- ██║   ██║███████║██║  ██║
+-- ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝
 
 		local dashboard = require("alpha.themes.dashboard")
 		-- Define and set highlight groups for each logo line
@@ -44,12 +44,12 @@ return {
 			},
 			{
 				type = "text",
-				val = "██║     ██║███████║██║  ██║",
+				val = "██║   ██║███████║██║  ██║",
 				opts = { hl = "NeovimDashboardLogo5", shrink_margin = false, position = "center" },
 			},
 			{
 				type = "text",
-				val = "╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝",
+				val = "╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝",
 				opts = { hl = "NeovimDashboardLogo6", shrink_margin = false, position = "center" },
 			},
 			{
@@ -64,14 +64,14 @@ return {
 		}
 		-- stylua: ignore
 		dashboard.section.buttons.val = {
-			-- dashboard.button("f", " " .. " Find file",       LazyVim.pick()),
-			-- dashboard.button("f", " " .. " Find file",       LazyVim.pick.wrap("files", { cwd = "~/proj" })),
-			-- dashboard.button("n", " " .. " Notes",           LazyVim.pick.wrap("files", { cwd = "$XDG_DOCUMENTS_DIR/daily/" })),
-			-- dashboard.button("r", " " .. " Recent files",    LazyVim.pick("oldfiles")),
-			-- dashboard.button("g", " " .. " Find text",       LazyVim.pick("live_grep")),
-			-- dashboard.button("c", " " .. " Config",          LazyVim.pick.config_files()),
+			-- dashboard.button("f", " " .. " Find file",     LazyVim.pick()),
+			-- dashboard.button("f", " " .. " Find file",     LazyVim.pick.wrap("files", { cwd = "~/proj" })),
+			-- dashboard.button("n", " " .. " Notes",       LazyVim.pick.wrap("files", { cwd = "$XDG_DOCUMENTS_DIR/daily/" })),
+			-- dashboard.button("r", " " .. " Recent files",  LazyVim.pick("oldfiles")),
+			-- dashboard.button("g", " " .. " Find text",     LazyVim.pick("live_grep")),
+			-- dashboard.button("c", " " .. " Config",      LazyVim.pick.config_files()),
 			-- dashboard.button("s", " " .. " Restore Session", [[<cmd> lua require("persistence").load() <cr>]]),
-			-- dashboard.button("q", " " .. " Quit",            "<cmd> qa <cr>"),
+			-- dashboard.button("q", " " .. " Quit",      "<cmd> qa <cr>"),
 		}
 		for _, button in ipairs(dashboard.section.buttons.val) do
 			button.opts.hl = "AlphaButtons"

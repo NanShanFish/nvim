@@ -1,104 +1,77 @@
 return {
-    "folke/snacks.nvim",
-    lazy = false,
-    opts = {
-        picker = {
-            enabled = true,
-            ui_select = true,
-            layout = { cycle = false, },
-            matcher = {
-                cwd_bonus = true,
-                frecency = true,
-                history_bonus = true,
-            },
-            formatters = {
-                file = {
-                    filename_first = true,
-                    truncate = 80,
-                },
-                severity = {
-                    icons = true, -- show severity icons
-                    level = true, -- show severity level
-                    pos = "left", -- position of the diagnostics
-                },
-            },
-            win = {
-                input = {
-                    keys = {
-                        ["<Esc>"] = { "close", mode = { "n", "i" } },
-                    },
-                },
-            },
+  "folke/snacks.nvim",
+  lazy = false,
+  opts = {
+    picker = {
+      enabled = true,
+      ui_select = true,
+      layout = { cycle = false, },
+      matcher = {
+        cwd_bonus = true,
+        frecency = true,
+        history_bonus = true,
+      },
+      formatters = {
+        file = {
+          filename_first = true,
+          truncate = 80,
         },
-        bigfile = { enabled = true },
-        explorer = { replace_netrw = true, },
-        scope = {
-            treesitter = {
-                enabled = true,
-                injections = true, -- include language injections when detecting scope (useful for languages like `vue`)
-                blocks = {
-                    enabled = true, -- enable to use the following blocks
-                    "function_declaration",
-                    "function_definition",
-                    "method_declaration",
-                    "method_definition",
-                    "class_declaration",
-                    "class_definition",
-                    "do_statement",
-                    "while_statement",
-                    "if_statement",
-                    "for_statement",
-                },
-                -- these treesitter fields will be considered as blocks
-                field_blocks = {
-                    "local_declaration",
-                },
-            },
+        severity = {
+          icons = true, -- show severity icons
+          level = true, -- show severity level
+          pos = "left", -- position of the diagnostics
         },
-        indent = {
-            chunk = {
-                enabled = true
-            },
+      },
+      win = {
+        input = {
+          keys = {
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+          },
         },
-        words = { enabled = true },
-        quickfile = { enabled = true },
-        lazygit = { enabled = true },
+      },
+    },
+    bigfile = { enabled = true },
+    explorer = { replace_netrw = true, },
+    scope = { enabled = false },
+    indent = { enabled = false },
+    words = { enabled = true },
+    quickfile = { enabled = true },
+    lazygit = { enabled = true },
 
-        input = { enabled = false },
-        notifier = { enabled = false },
-        scroll = { enabled = false },
-        statuscolumn = { enabled = false },
-        terminal = { enabled = false, },
-        dashboard = {
-            preset = {
-                pick = function(cmd, opts)
-                    return Snacks.picker(cmd, opts)()
-                end,
-                header = [[
+    input = { enabled = false },
+    notifier = { enabled = false },
+    scroll = { enabled = false },
+    statuscolumn = { enabled = false },
+    terminal = { enabled = false, },
+    dashboard = {
+      preset = {
+        pick = function(cmd, opts)
+          return Snacks.picker(cmd, opts)()
+        end,
+        header = [[
 ░   ░░░  ░░░      ░░░        ░░        ░░░      ░░░  ░░░░  ░
 ▒    ▒▒  ▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒
 ▓  ▓  ▓  ▓▓▓      ▓▓▓      ▓▓▓▓▓▓▓  ▓▓▓▓▓▓      ▓▓▓        ▓
 █  ██    ████████  ██  ███████████  ███████████  ██  ████  █
 █  ███   ███      ███  ████████        ███      ███  ████  █
  ]],
-                -- stylua: ignore
-                ---@type snacks.dashboard.Item[]
-                keys = {
+        -- stylua: ignore
+        keys = {
 
-                    { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-                    { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-                    { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-                    { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-                    { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-                    { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
 
-                    { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
-                    { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-                },
-            },
+          { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
         },
+      },
     },
-    keys = {
+  },
+  keys = {
 		-- Top Pickers & Explorer
 		{ "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
 		{ "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
@@ -167,7 +140,7 @@ return {
 		{ "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
 		{ "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
 		{ "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-		{ "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
-		{ "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+		{ "]]",     function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+		{ "[[",     function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
 	},
 }
