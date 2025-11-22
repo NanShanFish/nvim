@@ -1,5 +1,8 @@
 return {
-  "vimpostor/vim-tpipeline",
+  "NanShanFish/vim-tpipeline",
   enabled = true,
-  event = "User NsfLoad"
+  event = "User NsfLoad",
+  init = function ()
+    require("ui.statusline")
+  end
 }

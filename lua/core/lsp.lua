@@ -1,11 +1,13 @@
+local icons = require("ui.ui").icons
+
 -- Diagnostics {{{
 local config = {
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = "✘",
-      [vim.diagnostic.severity.WARN] = "▲",
-      [vim.diagnostic.severity.HINT] = "!",
-      [vim.diagnostic.severity.INFO] = "»",
+      [vim.diagnostic.severity.ERROR] = icons.Error,
+      [vim.diagnostic.severity.WARN] = icons.Warn,
+      [vim.diagnostic.severity.HINT] = icons.Hint,
+      [vim.diagnostic.severity.INFO] = icons.Info,
 
     },
   },
@@ -28,33 +30,6 @@ vim.diagnostic.config(config)
 -- }}}
 
 -- Improve LSPs UI {{{
-local icons = {
-  Class = " ",
-  Color = " ",
-  Constant = " ",
-  Constructor = " ",
-  Enum = " ",
-  EnumMember = " ",
-  Event = " ",
-  Field = " ",
-  File = " ",
-  Folder = " ",
-  Function = "󰊕 ",
-  Interface = " ",
-
-  Keyword = " ",
-  Method = "ƒ ",
-  Module = "󰏗 ",
-  Property = " ",
-  Snippet = " ",
-  Struct = " ",
-
-  Text = " ",
-  Unit = " ",
-
-  Value = " ",
-  Variable = " ",
-}
 
 local completion_kinds = vim.lsp.protocol.CompletionItemKind
 
@@ -96,6 +71,7 @@ end
 
 -- Create keybindings, commands, inlay hints and autocommands on LSP attach {{{
 
+vim.lsp.set_log_level("off")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     vim.lsp.inlay_hint.enable(true)
