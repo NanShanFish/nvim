@@ -38,8 +38,7 @@ end, {
     nargs = "*",
     complete = "file"
   })
-map( {"n", "i", "x"}, '<F5>', "<cmd>Te make<cr>", opt)
-map( {"n", "i", "x"}, '<F6>', "<cmd>Te make %:t:r<cr>", opt)
+map( {"n", "i", "x"}, '<F6>', "<cmd>Te make<cr>", opt)
 map( {"n", "x"}, '\\\\', ":Te ", opt)
 
 -- Esc
