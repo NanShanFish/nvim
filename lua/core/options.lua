@@ -101,3 +101,22 @@ end
 -- 	vim.keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
 -- 	vim.keymap.set({ "n", "v" }, "<C-+>", ":lua vim.g.neovide_scale_factor = 0.6<CR>")
 -- end
+
+
+-----------------------------------------------------------
+-- Wsl
+-----------------------------------------------------------
+if vim.fn.has("wsl") == 1 then
+  vim.g.clipboard = {
+    name = 'win32yank-wsl',
+    copy = {
+      ['+'] = '/mnt/d/SoftWare/Scoop/shims/win32yank.exe -i --crlf',
+      ['*'] = '/mnt/d/SoftWare/Scoop/shims/win32yank.exe -i --crlf',
+    },
+    paste = {
+      ['+'] = '/mnt/d/SoftWare/Scoop/shims/win32yank.exe -o --lf',
+      ['*'] = '/mnt/d/SoftWare/Scoop/shims/win32yank.exe -o --lf',
+    },
+    cache_enabled = 0,
+  }
+end
