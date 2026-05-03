@@ -29,9 +29,20 @@ return {
           },
         },
       },
+      sources = {
+        explorer = {
+          layout = {
+            layout = {
+              position = "right",
+            }
+          }
+        }
+      }
     },
     bigfile = { enabled = true },
-    explorer = { replace_netrw = true, },
+    explorer = {
+      replace_netrw = true,
+    },
     scope = { enabled = false },
     indent = { enabled = false },
     words = { enabled = true },
