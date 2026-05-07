@@ -71,7 +71,7 @@ end
 
 -- Create keybindings, commands, inlay hints and autocommands on LSP attach {{{
 
-vim.lsp.set_log_level("off")
+vim.lsp.log.set_level("off")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     vim.lsp.inlay_hint.enable(true)

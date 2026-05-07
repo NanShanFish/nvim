@@ -117,3 +117,54 @@ map("n", "<leader>ue", toggle_virtual_lines, { desc = "toggle error line"})
 
 -- ig => Entire Buffer text-object
 map({"o", "x"}, "ig", ":<C-u>normal! ggVG<cr>", { desc = "Entire Buffer" })
+
+
+local diff_buf_id = -1
+vim.keymap.set("n", "<leader>gd", function()
+    if vim.api.nvim_buf_is_valid(diff_buf_id) and vim.api.nvim_buf_is_loaded(diff_buf_id) then
+        vim.cmd('diffoff!')
+        vim.api.nvim_buf_delete(diff_buf_id, { force = true })
+        diff_buf_id = -1 -- 重置 ID
+        return
+    end
+
+    local file_path = vim.fn.expand('%')
+    local filetype = vim.bo.filetype
+
+    if file_path == "" then
+        print("当前 Buffer 没有文件路径")
+        return
+    end
+
+    local git_cmd = "git show HEAD:" .. file_path
+    local content = vim.fn.systemlist(git_cmd)
+
+    if vim.v.shell_error ~= 0 then
+        print("Git 错误: 无法获取 HEAD 版本内容")
+        return
+    end
+
+    vim.cmd('vnew')
+    diff_buf_id = vim.api.nvim_get_current_buf()
+
+    vim.api.nvim_buf_set_lines(diff_buf_id, 0, -1, false, content)
+    vim.bo[diff_buf_id].buftype = 'nofile'
+    vim.bo[diff_buf_id].bufhidden = 'wipe'
+    vim.bo[diff_buf_id].swapfile = false
+    vim.bo[diff_buf_id].filetype = filetype
+    vim.api.nvim_buf_set_name(diff_buf_id, "Git-Revision: " .. file_path)
+
+    vim.cmd('diffthis')
+    vim.cmd('wincmd p')
+    vim.cmd('diffthis')
+    vim.cmd('wincmd p')
+
+    -- 添加析构 call back
+    vim.api.nvim_buf_attach(diff_buf_id, false, {
+        on_detach = function()
+            diff_buf_id = -1
+            pcall(function() vim.cmd('diffoff!') end)
+        end
+    })
+
+end, { desc = "Toggle Git Diff" })

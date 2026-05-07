@@ -4,7 +4,6 @@ local opt = vim.opt -- Set options (global/buffer/windows-scoped)
 -- General
 -----------------------------------------------------------
 opt.mouse = "a"      -- Enable mouse support
-opt.clipboard = "unnamedplus"   -- Copy/paste to system clipboard
 opt.swapfile = false    -- Don't use swapfile
 opt.completeopt = "menuone,noinsert,noselect" -- Autocomplete options
 vim.o.undofile = true
@@ -119,4 +118,7 @@ if vim.fn.has("wsl") == 1 then
     },
     cache_enabled = 0,
   }
+elseif vim.fn.has("windows") == 0 then
+  opt.clipboard = "unnamedplus"
 end
+

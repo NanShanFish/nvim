@@ -1,19 +1,33 @@
 local highlights = {
-  "@markup.heading.1.markdown",
-  "@markup.heading.2.markdown",
-  "@markup.heading.3.markdown",
-  "@markup.heading.4.markdown",
-  "@markup.heading.5.markdown",
-  "@markup.heading.6.markdown",
+  "RainbowRed",
+  "RainbowYellow",
+  "RainbowBlue",
+  "RainbowOrange",
+  "RainbowGreen",
+  "RainbowViolet",
+  "RainbowCyan",
 }
+vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 return {
   "lukas-reineke/indent-blankline.nvim",
   event = "User NsfLoad",
   main = "ibl",
-  opts = {
-    indent = {
-      highlight = highlights,
-      char = "|"
-    }
-  },
+  config = function ()
+
+    require("ibl").setup({
+      indent = {
+        char = "|"
+      },
+      scope = {
+        show_start = true,
+        highlight = highlights
+      }
+    })
+  end
 }

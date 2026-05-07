@@ -3,6 +3,6 @@ return {
   event = "VimEnter",
   config = function()
     vim.cmd([[colorscheme tokyonight]])
-    vim.cmd([[hi Visual gui=reverse]])
+    -- vim.cmd([[hi Visual gui=reverse]])
   end
 }
