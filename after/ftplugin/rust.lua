@@ -2,7 +2,7 @@ vim.lsp.enable('rust_analyzer')
 
 vim.keymap.set({"i", "x", "n"},
   "<F5>",
-  "<cmd>Te rustc %:p -o /tmp/%:t:r.out && /tmp/%t:r.out<cr>",
+  "<cmd>Te rustc %:p -o /tmp/%:t:r.out && /tmp/%:t:r.out<cr>",
   { desc="Rust run current file", buffer = true }
 )
 

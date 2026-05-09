@@ -128,7 +128,7 @@ vim.keymap.set("n", "<leader>gd", function()
         return
     end
 
-    local file_path = vim.fn.expand('%')
+    local file_path = vim.fn.expand('%:p:.')
     local filetype = vim.bo.filetype
 
     if file_path == "" then
