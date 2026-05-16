@@ -6,9 +6,9 @@ local command = nil
 vim.keymap.set({"i", "x", "n"}, "<F5>", function ()
   if command == nil then
     if is_dir_exist(".venv") then
-      command = "<cmd>Te uv run %:p<cr>"
+      command = "Te uv run %:p"
     else
-      command = "<cmd>Te python %:p<cr>"
+      command = "Te python %:p"
     end
   else
     vim.cmd(command)

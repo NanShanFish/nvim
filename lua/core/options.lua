@@ -6,6 +6,7 @@ local opt = vim.opt -- Set options (global/buffer/windows-scoped)
 opt.mouse = "a"      -- Enable mouse support
 opt.swapfile = false    -- Don't use swapfile
 opt.completeopt = "menuone,noinsert,noselect" -- Autocomplete options
+opt.clipboard = "unnamedplus"
 vim.o.undofile = true
 vim.env.PATH = "/home/shan/.local/share/nvim/mason/bin/:" .. vim.env.PATH
 -----------------------------------------------------------
@@ -118,7 +119,5 @@ if vim.fn.has("wsl") == 1 then
     },
     cache_enabled = 0,
   }
-elseif vim.fn.has("windows") == 0 then
-  opt.clipboard = "unnamedplus"
 end
 
