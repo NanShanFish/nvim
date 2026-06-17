@@ -102,17 +102,20 @@ if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<leader>uh")
 end
 
-vim.g.virtual_lines_enabled = true
-local function toggle_virtual_lines()
-  if vim.g.virtual_lines_enabled then
-    vim.diagnostic.config{ virtual_lines = false, virtual_text = true }
-    vim.g.virtual_lines_enabled = false
+vim.g.errorline_state = 1
+local function toggle_errorline_status()
+  if vim.g.errorline_state == 1 then
+    vim.diagnostic.config{ signs = false, virtual_lines = false, virtual_text = false }
+    vim.g.errorline_state = 2
+	elseif vim.g.errorline_state == 2 then
+    vim.diagnostic.config{ signs = true, virtual_lines = false, virtual_text = true }
+    vim.g.errorline_state = 3
   else
     vim.diagnostic.config{ virtual_lines = { current_line = true }, virtual_text = false }
-    vim.g.virtual_lines_enabled = true
+    vim.g.errorline_state = 1
   end
 end
-map("n", "<leader>ue", toggle_virtual_lines, { desc = "toggle error line"})
+map("n", "<leader>ue", toggle_errorline_status, { desc = "toggle error line"})
 
 
 -- ig => Entire Buffer text-object

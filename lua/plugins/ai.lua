@@ -31,7 +31,7 @@ return {
   version = "*",
   keys = {
     {
-      "<C-a>",
+      "<leader>aa",
       function()
           local context = require("opencode.context").new()
 
@@ -54,7 +54,7 @@ return {
         desc = "Ask OpenCode & Smart Jump",
       },
       {
-        "<C-a>",
+        "<leader>aa",
         function()
           local context = require("opencode.context").new()
 

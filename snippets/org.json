@@ -1,0 +1,10 @@
+{
+  "quote": {
+    "prefix": "#+BEGIN_QUOTE",
+    "body": [
+      "#+BEGIN_QUOTE",
+      "${1:content}",
+      "#+END_QUOTE"
+    ]
+  }
+}
