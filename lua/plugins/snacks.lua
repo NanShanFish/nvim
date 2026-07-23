@@ -1,5 +1,6 @@
 return {
   "folke/snacks.nvim",
+  priority=1000,
   lazy = false,
   opts = {
     picker = {
@@ -94,7 +95,7 @@ return {
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
-    { "<leader><space>", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader><space>", function() Snacks.picker.smart() end, desc = "Find Files" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },

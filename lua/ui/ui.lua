@@ -1,16 +1,12 @@
 local M = {}
 
-vim.cmd([[
-  highlight UserText guifg=#cad3f5
-  highlight UserRed guifg=#ed8796
-  highlight UserPeach guifg=#ef9f76
-  highlight UserYellow guifg=#eed49f
-  highlight UserGreen guifg=#a6da95
-  highlight UserCyan guifg=#8bd5ca
-  highlight UserBlue guifg=#8aadf4
-  highlight UserPurple guifg=#c6a0f6
-  highlight UserPink gui=bold guifg=#f5bde6
-]])
+vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+vim.api.nvim_set_hl(0, "RainbowPurple", { fg = "#C678DD" })
 
 M.icons = {
   Class = " ",
