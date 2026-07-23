@@ -12,7 +12,9 @@ vim.env.PATH = "/home/shan/.local/share/nvim/mason/bin/:" .. vim.env.PATH
 -----------------------------------------------------------
 -- Neovim UI
 -----------------------------------------------------------
-opt.number = true   -- Show line number
+opt.number = true      -- Show line number
+opt.scrolloff = 10
+opt.cursorline = true  -- highlight current line
 opt.showmatch = true   -- Highlight matching parenthesis
 opt.foldmethod = "marker" -- Enable folding (default 'foldmarker')
 opt.colorcolumn = "80"  -- Line lenght marker at 80 columns
@@ -22,7 +24,7 @@ opt.ignorecase = true  -- Ignore case letters when search
 opt.smartcase = true   -- Ignore lowercase for the whole pattern
 opt.linebreak = true   -- Wrap on word boundary
 opt.termguicolors = true  -- Enable 24-bit RGB colors
-opt.laststatus = 0   -- Set global statusline
+opt.laststatus = 0     -- Set global statusline
 opt.wrap = false
 opt.list = true
 opt.listchars = "tab:| ,trail:·"
