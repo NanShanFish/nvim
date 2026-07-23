@@ -4,7 +4,7 @@ return {
     event = "User NsfLoad",
     opts = {
       highlight = { enable = true },
-      indent = { enable = true },
+      indent = { enable = true, disable = { "python" } },
       ensure_installed = {
         "awk",
         "regex",
@@ -32,6 +32,21 @@ return {
       },
       sync_install = false,
     },
+    config = function(_, opts)
+      local status_ok, ts = pcall(require, "nvim-treesitter")
+      if status_ok and ts.setup then
+        ts.setup(opts)
+      else
+        require("nvim-treesitter.configs").setup(opts)
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("my_treesitter_attach", { clear = true }),
+        callback = function(ev)
+          pcall(vim.treesitter.start, ev.buf)
+        end,
+      })
+    end,
   },
   {
     'nvim-treesitter/nvim-treesitter-textobjects',

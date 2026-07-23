@@ -39,6 +39,10 @@ require("lazy").setup({
 		lazy = true,
 		version = false,
 	},
+	rocks = {
+		enabled = false,
+		hererocks = false,
+	},
 	install = { colorscheme = { "gruvbox" } },
 	checker = { enabled = false }, -- automatically check for plugin updates
 	performance = {

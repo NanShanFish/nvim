@@ -74,7 +74,7 @@ end
 vim.lsp.log.set_level("off")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
-    vim.lsp.inlay_hint.enable(true)
+    vim.lsp.inlay_hint.enable(false)
     local bufnr = ev.buf
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if not client then
@@ -162,7 +162,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 
 -- Servers {{{
-vim.lsp.config.luals = {
+vim.lsp.config.lua_ls = {
   cmd = {'lua-language-server'},
   filetypes = {'lua'},
   root_markers = { ".luarc.json", ".git", vim.uv.cwd() },
@@ -174,7 +174,6 @@ vim.lsp.config.luals = {
       },
       runtime = {
         version = 'LuaJIT',
-        path = {'lua/?.lua', 'lua/?/init.lua'},
       },
       diagnostics = {
         globals = {'vim', 'Snacks'},
@@ -184,14 +183,11 @@ vim.lsp.config.luals = {
       },
       workspace = {
         checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
-        },
       },
     },
   },
 }
-vim.lsp.enable('luals')
+vim.lsp.enable('lua_ls')
 
 vim.lsp.config.rust_analyzer = {
   filetypes = { "rust" },
@@ -243,7 +239,6 @@ vim.lsp.config.clangd = {
     "-j=" .. 2,
     "--background-index",
     "--clang-tidy",
-    "--inlay-hints",
     "--fallback-style=llvm",
     "--all-scopes-completion",
     "--completion-style=detailed",
@@ -263,6 +258,14 @@ vim.lsp.config.clangd = {
     "configure.ac",
     ".git",
     vim.uv.cwd(),
+  },
+  capabilities = {
+    offsetEncoding = nil,
+    textDocument = {
+      completion = {
+        editsNearCursor = true,
+      },
+    },
   },
 }
 
