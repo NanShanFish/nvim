@@ -16,7 +16,7 @@ opt.number = true      -- Show line number
 opt.scrolloff = 10
 opt.cursorline = true  -- highlight current line
 opt.showmatch = true   -- Highlight matching parenthesis
-opt.foldmethod = "marker" -- Enable folding (default 'foldmarker')
+opt.foldtext = ""
 opt.colorcolumn = "80"  -- Line lenght marker at 80 columns
 opt.splitright = true  -- Vertical split to the right
 opt.splitbelow = true  -- Horizontal split to the bottom
@@ -32,6 +32,7 @@ opt.relativenumber = true
 vim.o.cmdheight = 0
 vim.diagnostic.enable = true
 vim.o.winborder = "single"
+vim.cmd([[colorscheme catppuccin]])
 -----------------------------------------------------------
 -- Tabs, indent
 -----------------------------------------------------------
@@ -90,6 +91,7 @@ local disabled_built_ins = {
 for _, plugin in pairs(disabled_built_ins) do
   g["loaded_" .. plugin] = 1
 end
+vim.o.grepprg = "rg --vimgrep --smart-case --hidden"
 
 -----------------------------------------------------------
 -- Plugins

@@ -12,27 +12,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd("InsertEnter", {
-  pattern = "*",
-  callback = function()
-    vim.diagnostic.config({
-      virtual_lines = false,
-    })
-  end
-})
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-
-  callback = function()
-    if vim.g.virtual_lines_enabled then
-      vim.diagnostic.config({
-        virtual_lines = { current_line = true},
-      })
-    end
-  end
-})
-
-
 vim.api.nvim_create_autocmd('User', {
   pattern = "VeryLazy",
   callback = function ()

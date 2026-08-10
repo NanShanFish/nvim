@@ -277,21 +277,12 @@ return {
       { desc = "Refile current subtree to gtd.org buckets" }
     )
 
-    -- vim.api.nvim_set_hl(0, '@org.agenda.day',          { fg = '#a6adc8', bold = true })
-    -- vim.api.nvim_set_hl(0, '@org.agenda.today',        { fg = '#eed49f', bold = true, underline = true })
-    -- vim.api.nvim_set_hl(0, '@org.agenda.time_grid',    { fg = '#5b6078' })
-    -- vim.api.nvim_set_hl(0, '@org.agenda.scheduled',    { fg = '#a6e3a1' })
-    -- vim.api.nvim_set_hl(0, '@org.agenda.scheduled_past',{ fg = '#f5bde6', italic = true })
-    -- vim.api.nvim_set_hl(0, '@org.agenda.deadline',     { fg = '#ee99a0', italic = true })
-    -- vim.api.nvim_set_hl(0, '@org.agenda.deadline.upcoming', { fg = '#ee99a0' })
-    --
-    -- vim.api.nvim_set_hl(0, '@org.headline.level1.org', { link = 'RainbowRed' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level2.org', { link = 'RainbowOrange' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level3.org', { link = 'RainbowYellow' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level4.org', { link = 'RainbowGreen' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level5.org', { link = 'RainbowCyan' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level6.org', { link = 'RainbowBlue' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level7.org', { link = 'RainbowPurple' })
-    -- vim.api.nvim_set_hl(0, '@org.headline.level8.org', { link = 'RainbowRed' })
+    vim.api.nvim_set_hl(0, '@org.agenda.day',          { fg = '#a6adc8', bold = true })
+    vim.api.nvim_set_hl(0, '@org.agenda.today',        { fg = '#eed49f', bold = true, underline = true })
+    vim.api.nvim_set_hl(0, '@org.agenda.time_grid',    { fg = '#5b6078' })
+    vim.api.nvim_set_hl(0, '@org.agenda.scheduled',    { fg = '#a6e3a1' })
+    vim.api.nvim_set_hl(0, '@org.agenda.scheduled_past',{ fg = '#f5bde6', italic = true })
+    vim.api.nvim_set_hl(0, '@org.agenda.deadline',     { fg = '#ee99a0', italic = true })
+    vim.api.nvim_set_hl(0, '@org.agenda.deadline.upcoming', { fg = '#ee99a0' })
   end,
 }

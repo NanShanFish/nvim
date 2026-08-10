@@ -8,7 +8,7 @@ return {
   {
     'echasnovski/mini.pairs',
     version = false,
-    enabled = false,
+    enabled = true,
     event = "InsertEnter",
     opts = {},
   },

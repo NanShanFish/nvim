@@ -1,49 +1,30 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "User NsfLoad",
+    lazy = false,
     opts = {
       highlight = { enable = true },
       indent = { enable = true, disable = { "python" } },
-      ensure_installed = {
-        "awk",
-        "regex",
-
-        "c",
-        "cpp",
-        "make",
-
-        "bash",
-        "fish",
-
-        "python",
-        "lua",
-        "luadoc",
-
-        "markdown",
-        "markdown_inline",
-
-        "toml",
-        "yaml",
-        "json",
-
-        "vim",
-        "vimdoc",
-      },
       sync_install = false,
     },
     config = function(_, opts)
-      local status_ok, ts = pcall(require, "nvim-treesitter")
-      if status_ok and ts.setup then
-        ts.setup(opts)
-      else
-        require("nvim-treesitter.configs").setup(opts)
-      end
+      require("nvim-treesitter").setup(opts)
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+      vim.opt.foldlevel = 4
 
-      vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup("my_treesitter_attach", { clear = true }),
-        callback = function(ev)
-          pcall(vim.treesitter.start, ev.buf)
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = {
+          -- 'rust',
+          'python',
+          'c', 'cpp',
+          'markdown',
+          'bash', 'fish',
+          'java',
+        },
+        callback = function()
+          vim.treesitter.start()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
     end,
@@ -54,6 +35,24 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function ()
       require("nvim-treesitter-textobjects").setup()
+      local function select_with_fallback(query, group, fallback_keys)
+        local start_pos = vim.api.nvim_win_get_cursor(0)
+        local mode = vim.api.nvim_get_mode().mode
+
+        -- 尝试使用 Treesitter 块级对象（如 if/for/while 内部）
+        local status, _ = pcall(function()
+          require("nvim-treesitter-textobjects.select").select_textobject(query, group)
+        end)
+
+        local current_pos = vim.api.nvim_win_get_cursor(0)
+        local current_mode = vim.api.nvim_get_mode().mode
+
+        -- 如果 Treesitter 没有成功选中（光标未动、模式没变或报错）
+        if not status or (start_pos[1] == current_pos[1] and start_pos[2] == current_pos[2] and current_mode == mode) then
+          local keys = vim.api.nvim_replace_termcodes(fallback_keys, true, false, true)
+          vim.api.nvim_feedkeys(keys, "m", true)
+        end
+      end
       vim.keymap.set({ "x", "o" }, "af", function()
         require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
       end)
@@ -67,7 +66,10 @@ return {
         require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
       end)
       vim.keymap.set({ "x", "o" }, "is", function()
-        require "nvim-treesitter-textobjects.select".select_textobject("@local.scope", "locals")
+        select_with_fallback("@block.inner", "textobjects", "i{")
+      end)
+      vim.keymap.set({ "x", "o" }, "as", function()
+        select_with_fallback("@block.outer", "textobjects", "a{")
       end)
     end
   }
