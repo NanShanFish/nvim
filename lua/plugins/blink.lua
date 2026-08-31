@@ -54,7 +54,7 @@ return {
 
     sources = {
       per_filetype = {
-        -- org = { 'orgmode', 'path', 'snippets' },
+        org = { 'orgmode', 'path', 'snippets' },
         markdown = { 'lsp', 'path', 'snippets' },
         -- lua = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer'}
       },

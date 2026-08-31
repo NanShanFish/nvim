@@ -21,6 +21,7 @@ return {
           'markdown',
           'bash', 'fish',
           'java',
+          'go', 'gomod'
         },
         callback = function()
           vim.treesitter.start()

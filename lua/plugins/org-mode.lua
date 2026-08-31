@@ -103,19 +103,7 @@ return {
             },
           },
         },
-        a = {
-          description = "Event",
-          types = {
-            {
-              type = 'agenda',
-              org_agenda_span = 'day',
-              org_agenda_overriding_header = 'Event list',
-              org_agenda_files = { event_file_path, base_dir .. 'references/birth.org' },
-            }
-          }
-        },
       }
-
     })
     vim.keymap.set(
       "n",

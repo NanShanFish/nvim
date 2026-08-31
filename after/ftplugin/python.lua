@@ -1,4 +1,3 @@
-vim.lsp.enable('basedpyright')
 local is_dir_exist = require("utils").check_folder_exist
 
 local command = nil
